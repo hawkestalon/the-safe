@@ -1,0 +1,11 @@
+{
+  "name": "the-safe",
+  "version": "0.1.0",
+  "description": "Back end for a budget application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zach Hawkes (hawkestalon)",
+  "license": "ISC"
+}
