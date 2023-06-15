@@ -7,7 +7,8 @@
     "test": "echo \"Pfft. Who tests their code?\" && exit 1",
     "start": "nodemon",
     "build": "tsc --build",
-    "db:up": "docker-compose -p the-safe -f docker/docker-compose.yaml up -d"
+    "db:up": "docker-compose -p the-safe -f docker/docker-compose.yaml up -d",
+    "db:update": "knex migrate:latest"
   },
   "author": "Zach Hawkes (hawkestalon)",
   "license": "ISC",
