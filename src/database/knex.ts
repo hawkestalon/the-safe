@@ -1,7 +1,14 @@
 import knex from 'knex';
 
 export default knex({
-  client: 'pg',
-  connection: process.env.PG_CONNECTION,
-  searchPath: ['knex', 'public'],
+  client: "postgresql",
+    connection: {
+      database: "the-safe",
+      user: "localhost",
+      password: "password"
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
 });
