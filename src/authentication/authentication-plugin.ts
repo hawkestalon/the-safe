@@ -17,6 +17,7 @@ export const AuthenticationPlugin = fastifyPlugin(async (fastify: FastifyInstanc
     const decodedToken = jwt.verify(token, 'secretkey');
     if (decodedToken) {
       request.userId = (decodedToken as jwt.JwtPayload).id;
+      return;
     }
     throw new UnauthorizedError('user not authenticated!');
   });
