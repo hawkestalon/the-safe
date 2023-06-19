@@ -4,6 +4,7 @@ import { LoginPlugin } from './authentication/login-plugin';
 import { ResourceNotFoundError, UnauthorizedError } from './errors';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import FamilyPlugin from './family/plugin';
+import CategoryPlugin from './categories/plugin';
 
 const port: number = Number(process.env.port) || 3001;
 
@@ -29,6 +30,7 @@ server.get('/ping', async (request, reply) => {
 server.register(LoginPlugin);
 server.register(UserPlugin);
 server.register(FamilyPlugin);
+server.register(CategoryPlugin);
 
 server.listen({ port }, ( err, address) => {
   if (err) {
