@@ -1,5 +1,6 @@
-import fastify from 'fastify';
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import UserPlugin from './users/plugin';
+import { LoginPlugin } from './authentication/login-plugin';
 
 const port: number = Number(process.env.port) || 3001;
 
@@ -9,6 +10,7 @@ server.get('/ping', async (request, reply) => {
   reply.send('pong');
 });
 
+server.register(LoginPlugin);
 server.register(UserPlugin);
 
 server.listen({ port }, ( err, address) => {

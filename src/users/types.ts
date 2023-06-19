@@ -9,3 +9,8 @@ export interface User {
 }
 
 export type NewUser = Omit<User, 'id'>;
+
+export interface LoginBody {
+  email: string;
+  password: string;
+}

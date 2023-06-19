@@ -1,4 +1,5 @@
 import db from '../database/knex';
+import { ResourceNotFoundError } from '../errors';
 import { NewUser, User } from './types';
 
 interface UserModel {
@@ -38,11 +39,19 @@ export const getUsers = async (): Promise<User[]> => {
 
 export const getUserById = async (id: number): Promise<User> => {
   const user = await db<UserModel>('users').select('*').where('id', id).first();
-  if (!user) throw new Error('User not found!');
+  if (!user) throw new ResourceNotFoundError('User not found!');
   return fromDb(user);
 };
 
 export const insertUser = async (user: NewUser): Promise<number> => {
   const [result]= await db('users').insert(newForDb(user), ['id']);
   return result.id;
+}
+
+export const getUserByEmail = async (email: string): Promise<User> => {
+  const user = await db('users').select('*').where('email', email).first();
+
+  if (!user) throw new ResourceNotFoundError('User not found!');
+
+  return user;
 }

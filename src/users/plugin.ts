@@ -1,8 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
-import { createUser, getUser, listUsers } from "./service";
+import { createUser, getUser, listUsers, loginUser } from "./service";
 import { NewUser } from "./types";
+import { AuthenticationPlugin } from "../authentication/authentication-plugin";
 
 const UserPlugin = async (fastify: FastifyInstance) => {
+  fastify.register(AuthenticationPlugin);
   fastify.get('/users', async (request: FastifyRequest, reply: FastifyReply) => {
     const users = await listUsers();
     reply.send(users);
