@@ -1,4 +1,4 @@
-import fastify, { FastifyReply, FastifyRequest } from 'fastify';
+import fastify from 'fastify';
 import UserPlugin from './users/plugin';
 import { LoginPlugin } from './authentication/login-plugin';
 import { ResourceNotFoundError, UnauthorizedError } from './errors';
