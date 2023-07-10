@@ -7,6 +7,8 @@ interface CategoryModel {
   family_id: number;
   name: string;
   roll_over: boolean;
+  active: boolean;
+  total: number;
 };
 
 type NewCategoryModel = Omit<CategoryModel, 'id'>
@@ -14,7 +16,9 @@ type NewCategoryModel = Omit<CategoryModel, 'id'>
 const newForDb = (category: NewCategory): NewCategoryModel => ({
   name: category.name,
   roll_over: category.rollOver,
-  family_id: category.familyId
+  family_id: category.familyId,
+  active: category.active,
+  total: category.total,
 });
 
 const fromDb = (category: CategoryModel): Category => ({
@@ -22,6 +26,8 @@ const fromDb = (category: CategoryModel): Category => ({
   familyId: category.family_id,
   name: category.name,
   rollOver: category.roll_over,
+  active: category.active,
+  total: category.total
 });
 
 export const insertCategory = async (category: NewCategory): Promise<number> => {
