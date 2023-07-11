@@ -1,5 +1,6 @@
 import { getAllCategoriesInFamly } from '../categories/data-access';
 import db from '../database/knex';
+import { MonthlyCategory } from './types';
 
 interface MonthlyCategoryModel {
   month: number;
@@ -10,7 +11,16 @@ interface MonthlyCategoryModel {
   id: number;
 }
 
-export const createMonthlyCategories = async (familyId: number) => {
+const fromDb = (category: MonthlyCategoryModel): MonthlyCategory => ({
+  month: category.month,
+  year: category.year,
+  total: category.total,
+  current: category.current,
+  categoryId: category.category_id,
+  id: category.id,
+});
+
+export const createMonthlyCategories = async (familyId: number): Promise<number[]> => {
   // const get active categories in family
   const familyCategories = await getAllCategoriesInFamly(familyId);
   // const get current month and year
@@ -24,7 +34,13 @@ export const createMonthlyCategories = async (familyId: number) => {
       year,
       total: category.total,
       category_id: category.id,
-      current: 0,
+      current: 0, // could set a default in the database.
   }));
-  const ids = await db('monthly_category').insert(newMonthlyCategories, ['id']);
+  return await db('monthly_category').insert(newMonthlyCategories, ['id']);
 };
+
+export const getMonthlyCategoriesInIds = async (ids: number[]): Promise<MonthlyCategory[]> => {
+  const results =  await db<MonthlyCategoryModel>('monthly_category').select('*').where('id', ids);
+
+  return results.map(fromDb);
+}
