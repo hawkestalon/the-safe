@@ -20,7 +20,7 @@ const fromDb = (category: MonthlyCategoryModel): MonthlyCategory => ({
   id: category.id,
 });
 
-export const createMonthlyCategories = async (familyId: number): Promise<number[]> => {
+export const createMonthlyCategories = async (familyId: number): Promise<{ id: number }[]> => {
   // const get active categories in family
   const familyCategories = await getAllCategoriesInFamly(familyId);
   // const get current month and year
@@ -28,19 +28,29 @@ export const createMonthlyCategories = async (familyId: number): Promise<number[
   const month = todaysDate.getMonth();
   const year = todaysDate.getUTCFullYear();
   // use this data to create monthly categories
+  // get prev month results to compile new categories //
+  // const newMonthlyCategories = familyCategories.map((category) => ({
+  //     month,
+  //     year,
+  //     total: category.total, // if rollover + surplus/defecit of prev month
+  //     category_id: category.id,
+  //     current: 0, // could set a default in the database.
+  // }));
 
-  const newMonthlyCategories = familyCategories.map((category) => ({
-      month,
-      year,
-      total: category.total,
-      category_id: category.id,
-      current: 0, // could set a default in the database.
-  }));
+  const newMonthlyCategories = familyCategories.map((category) => {
+    let categoryTotal = category.total
+    if (category.rollOver) {
+      // get prev monthly category 
+    } 
+  });
+
   return await db('monthly_category').insert(newMonthlyCategories, ['id']);
 };
 
 export const getMonthlyCategoriesInIds = async (ids: number[]): Promise<MonthlyCategory[]> => {
-  const results =  await db<MonthlyCategoryModel>('monthly_category').select('*').where('id', ids);
+  const results =  await db<MonthlyCategoryModel>('monthly_category').select('*').whereIn('id', ids);
 
   return results.map(fromDb);
 }
+
+export const getPrevMonthCategory = async (categoryId: number): Promise<MonthlyCategory[]> => {};

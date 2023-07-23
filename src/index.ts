@@ -5,6 +5,7 @@ import { ResourceNotFoundError, UnauthorizedError } from './errors';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import FamilyPlugin from './family/plugin';
 import CategoryPlugin from './categories/plugin';
+import MonthlyCategoryPlugin from './monthly-category/plugin';
 
 const port: number = Number(process.env.port) || 3001;
 
@@ -31,6 +32,7 @@ server.register(LoginPlugin);
 server.register(UserPlugin);
 server.register(FamilyPlugin);
 server.register(CategoryPlugin);
+server.register(MonthlyCategoryPlugin);
 
 server.listen({ port }, ( err, address) => {
   if (err) {
