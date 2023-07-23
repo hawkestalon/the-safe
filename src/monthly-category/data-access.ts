@@ -1,5 +1,5 @@
-import db from "../database/knex";
-import { MonthlyCategory, NewMonthlyCategory } from "./types";
+import db from '../database/knex';
+import { MonthlyCategory, NewMonthlyCategory } from './types';
 
 interface MonthlyCategoryModel {
   month: number;
@@ -19,46 +19,17 @@ const fromDb = (category: MonthlyCategoryModel): MonthlyCategory => ({
   id: category.id,
 });
 
-// export const createMonthlyCategories = async (
-//   familyId: number,
-// ): Promise<{ id: number }[]> => {
-//   // const get active categories in family
-//   const familyCategories = await getAllCategoriesInFamly(familyId);
-//   // const get current month and year
-//   const todaysDate = new Date();
-//   const month = todaysDate.getMonth();
-//   const year = todaysDate.getUTCFullYear();
-//   // use this data to create monthly categories
-//   // get prev month results to compile new categories //
-//   // const newMonthlyCategories = familyCategories.map((category) => ({
-//   //     month,
-//   //     year,
-//   //     total: category.total, // if rollover + surplus/defecit of prev month
-//   //     category_id: category.id,
-//   //     current: 0, // could set a default in the database.
-//   // }));
-
-//   const newMonthlyCategories = familyCategories.map((category) => {
-//     const categoryTotal = category.total;
-//     if (category.rollOver) {
-//       // get prev monthly category
-//     }
-//   });
-
-//   return db("monthly_category").insert(newMonthlyCategories, ["id"]);
-// };
-
 export async function createMonthlyCategories(
   monthlyCategories: NewMonthlyCategory[],
 ): Promise<number[]> {
   const currentDate = new Date();
-  const ids = await db("monthly_category").insert(
+  const ids = await db('monthly_category').insert(
     {
       ...monthlyCategories,
       month: currentDate.getUTCMonth(),
       year: currentDate.getUTCFullYear,
     },
-    ["id"],
+    ['id'],
   );
 
   return ids.map((x) => x.id);
@@ -67,9 +38,9 @@ export async function createMonthlyCategories(
 export const getMonthlyCategoriesInIds = async (
   ids: number[],
 ): Promise<MonthlyCategory[]> => {
-  const results = await db<MonthlyCategoryModel>("monthly_category")
-    .select("*")
-    .whereIn("id", ids);
+  const results = await db<MonthlyCategoryModel>('monthly_category')
+    .select('*')
+    .whereIn('id', ids);
 
   return results.map(fromDb);
 };
@@ -83,11 +54,11 @@ function getPrevMonth(): number {
 export const getPrevMonthCategoryForFamily = async (
   familyId: number,
 ): Promise<MonthlyCategory[]> => {
-  const monthlyCategories = await db("monthly_category as mc")
-    .select("mc.*")
-    .join("category as c", "c.category_id", "mc.category_id")
-    .where("c.family_id", familyId)
-    .andWhere("mc.month", getPrevMonth());
+  const monthlyCategories = await db('monthly_category as mc')
+    .select('mc.*')
+    .join('category as c', 'c.category_id', 'mc.category_id')
+    .where('c.family_id', familyId)
+    .andWhere('mc.month', getPrevMonth());
 
   return monthlyCategories.map(fromDb);
 };

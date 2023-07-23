@@ -1,5 +1,7 @@
 {
   "include": [
     "src/**/*",
+    "knexfile.ts",
+    "migrations/**/*"
   ]
 }

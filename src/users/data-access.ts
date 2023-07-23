@@ -44,9 +44,9 @@ export const getUserById = async (id: number): Promise<User> => {
 };
 
 export const insertUser = async (user: NewUser): Promise<number> => {
-  const [result]= await db('users').insert(newForDb(user), ['id']);
+  const [result] = await db('users').insert(newForDb(user), ['id']);
   return result.id;
-}
+};
 
 export const getUserByEmail = async (email: string): Promise<User> => {
   const user = await db('users').select('*').where('email', email).first();
@@ -54,4 +54,4 @@ export const getUserByEmail = async (email: string): Promise<User> => {
   if (!user) throw new ResourceNotFoundError('User not found!');
 
   return user;
-}
+};

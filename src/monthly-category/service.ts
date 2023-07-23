@@ -1,10 +1,10 @@
-import { getAllCategoriesInFamly } from "../categories/data-access";
+import { getAllCategoriesInFamly } from '../categories/data-access';
 import {
   createMonthlyCategories,
   getMonthlyCategoriesInIds,
   getPrevMonthCategoryForFamily,
-} from "./data-access";
-import { MonthlyCategory } from "./types";
+} from './data-access';
+import { MonthlyCategory } from './types';
 
 export const initiateNewMonthCategories = async (
   familyId: number,

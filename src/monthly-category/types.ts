@@ -9,5 +9,5 @@ export interface MonthlyCategory {
 
 export type NewMonthlyCategory = Pick<
   MonthlyCategory,
-  "categoryId" | "total" | "current"
+  'categoryId' | 'total' | 'current'
 >;

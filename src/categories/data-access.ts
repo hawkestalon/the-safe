@@ -9,9 +9,9 @@ interface CategoryModel {
   roll_over: boolean;
   active: boolean;
   total: number;
-};
+}
 
-type NewCategoryModel = Omit<CategoryModel, 'id'>
+type NewCategoryModel = Omit<CategoryModel, 'id'>;
 
 const newForDb = (category: NewCategory): NewCategoryModel => ({
   name: category.name,
@@ -27,25 +27,34 @@ const fromDb = (category: CategoryModel): Category => ({
   name: category.name,
   rollOver: category.roll_over,
   active: category.active,
-  total: category.total
+  total: category.total,
 });
 
-export const insertCategory = async (category: NewCategory): Promise<number> => {
+export const insertCategory = async (
+  category: NewCategory,
+): Promise<number> => {
   const [result] = await db('category').insert(newForDb(category), ['id']);
 
   return result.id;
 };
 
 export const getCategoryById = async (id: number): Promise<Category> => {
-  const category = await db<CategoryModel>('category').select('*').where('id', id).first();
+  const category = await db<CategoryModel>('category')
+    .select('*')
+    .where('id', id)
+    .first();
 
   if (!category) throw new ResourceNotFoundError('category not found!');
 
   return fromDb(category);
-}
+};
 
-export const getAllCategoriesInFamly = async (familyId: number): Promise<Category[]> => {
-  const categories = await db<CategoryModel>('category').select('*').where('family_id', familyId);
+export const getAllCategoriesInFamly = async (
+  familyId: number,
+): Promise<Category[]> => {
+  const categories = await db<CategoryModel>('category')
+    .select('*')
+    .where('family_id', familyId);
 
   return categories.map(fromDb);
-}
+};
