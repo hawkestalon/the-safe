@@ -6,3 +6,8 @@ export interface MonthlyCategory {
   categoryId: number;
   id: number;
 }
+
+export type NewMonthlyCategory = Pick<
+  MonthlyCategory,
+  "categoryId" | "total" | "current"
+>;
