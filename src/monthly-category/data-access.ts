@@ -53,4 +53,12 @@ export const getMonthlyCategoriesInIds = async (ids: number[]): Promise<MonthlyC
   return results.map(fromDb);
 }
 
-export const getPrevMonthCategory = async (categoryId: number): Promise<MonthlyCategory[]> => {};
+export const getPrevMonthCategory = async (categoryId: number): Promise<MonthlyCategory> => {};
+
+export const getPrevMonthCategoryForFamily = async (familyId: number): Promise<MonthlyCategory[]> => {
+  // empty
+  // join with category table on category id where category family Id = family id;
+  const date = new Date();
+  const month = date.getUTCMonth();
+  const monthlyCategories = await db('monthly_category as mc').select('mc.*').join('category as c', 'c.category_id', 'mc.category_id').where('c.family_id', familyId).andWhere('mc.month', month);
+}
