@@ -8,7 +8,8 @@
     "start": "nodemon",
     "build": "tsc --build",
     "db:up": "docker-compose -p the-safe -f docker/docker-compose.yaml up -d",
-    "db:update": "knex migrate:latest"
+    "db:update": "knex migrate:latest",
+    "lint": "eslint ."
   },
   "author": "Zach Hawkes (hawkestalon)",
   "license": "ISC",
