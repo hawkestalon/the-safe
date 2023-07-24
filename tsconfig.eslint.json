@@ -1,8 +1,5 @@
 {
   "include": [
-    "packages/**/src/**/*",
-    "packages/**/__tests__/**/*",
-    "packages/**/knexfile.ts",
-    "packages/provisioner/scripts/**/*"
+    "src/**/*",
   ]
 }
