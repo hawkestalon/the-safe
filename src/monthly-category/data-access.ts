@@ -54,11 +54,12 @@ function getPrevMonth(): number {
 export const getPrevMonthCategoryForFamily = async (
   familyId: number,
 ): Promise<MonthlyCategory[]> => {
+  const prevMonth = getPrevMonth();
   const monthlyCategories = await db('monthly_category as mc')
     .select('mc.*')
-    .join('category as c', 'c.category_id', 'mc.category_id')
+    .join('category as c', 'c.id', 'mc.category_id')
     .where('c.family_id', familyId)
-    .andWhere('mc.month', getPrevMonth());
+    .andWhere('mc.month', prevMonth);
 
   return monthlyCategories.map(fromDb);
 };

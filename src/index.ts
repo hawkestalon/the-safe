@@ -12,6 +12,7 @@ const port: number = Number(process.env.port) || 3001;
 const server = fastify({ logger: true });
 
 server.setErrorHandler((error, request, reply) => {
+  throw error;
   console.log('Error -> ', error.constructor.name);
   if (error instanceof ResourceNotFoundError) {
     reply.status(404).send({

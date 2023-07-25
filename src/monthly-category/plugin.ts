@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { AuthenticationPlugin } from '../authentication/authentication-plugin';
-import { createNewMonthCategories } from './service';
+import { initiateNewMonthCategories } from './service';
 
 const monthlyCategoryPlugin = async (fastify: FastifyInstance) => {
   fastify.register(AuthenticationPlugin);
@@ -10,7 +10,7 @@ const monthlyCategoryPlugin = async (fastify: FastifyInstance) => {
       request: FastifyRequest<{ Params: { familyId: number } }>,
       reply: FastifyReply,
     ) => {
-      const result = await createNewMonthCategories(request.params.familyId);
+      const result = await initiateNewMonthCategories(request.params.familyId);
 
       reply.send(result);
     },
